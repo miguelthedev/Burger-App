@@ -1,0 +1,11 @@
+.DrawerToggle {
+  background: #fff;
+  padding: 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.DrawerToggle span {
+  cursor: pointer;
+}
