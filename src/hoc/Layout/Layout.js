@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Aux from '../Aux/Aux';
-import BurgerBuilder from '../../containers/BurgerBuilder/BurgerBuilder';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
@@ -29,7 +28,7 @@ class Layout extends Component {
           open={this.state.showSideDrawer}
           closed={this.sideDrawerClosedHandler}/>
         <main className={classes.Content}>
-          <BurgerBuilder/>
+          {this.props.children}
         </main>
       </Aux>
     )
