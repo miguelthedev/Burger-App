@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './Auth.css';
 import * as actions from '../../store/actions/index';
 
@@ -100,7 +101,7 @@ class Auth extends Component {
       });
     }
 
-    const form = formElementsArray.map(formElement => (
+    let form = formElementsArray.map(formElement => (
       <Input
         key={formElement.id}
         elementType={formElement.config.elementType}
@@ -112,8 +113,20 @@ class Auth extends Component {
         changed={(e => this.inputChangedHandler(e, formElement.id))}/>
     ));
 
+    if(this.props.loading) {
+      form = <Spinner/>
+    }
+
+    let errorMessage = null;
+    if(this.props.error) {
+      errorMessage = (
+        <p>{this.props.error.message}</p>
+      );
+    }
+
     return (
       <div className={classes.Auth}>
+        {errorMessage}      
         <form onSubmit={this.submitHandler}>
           {form}
           <Button btnType="Success">Submit</Button>
@@ -128,11 +141,12 @@ class Auth extends Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-
-//   }
-// }
+const mapStateToProps = state => {
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -140,4 +154,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
